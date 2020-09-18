@@ -1,40 +1,47 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
-import org.junit.platform.engine.TestDescriptor;
 import org.junit.platform.engine.UniqueId;
+import org.junit.platform.engine.UniqueId.Segment;
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
-import org.junit.platform.launcher.TestIdentifier;
+import org.junit.platform.engine.support.descriptor.ClassSource;
+import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.TestPlan;
 
 final class SuiteTestDescriptor extends AbstractTestDescriptor {
-    private final TestIdentifier testIdentifier;
 
-    public SuiteTestDescriptor(SuiteEngineDescriptor engineDescriptor, TestIdentifier testIdentifier) {
-        super(
-                createId(engineDescriptor, testIdentifier),
-                testIdentifier.getDisplayName(),
-                testIdentifier.getSource().orElse(null)
-        );
-        this.testIdentifier = testIdentifier;
+    static final String SEGMENT_TYPE = "suite";
+
+    private final Launcher launcher;
+    private final TestPlan testPlan;
+
+    public SuiteTestDescriptor(UniqueId id,
+            Class<?> testClass,
+            TestPlan testPlan,
+            Launcher launcher) {
+        super(id, testClass.getSimpleName(), ClassSource.from(testClass));
+        this.testPlan = testPlan;
+        this.launcher = launcher;
     }
 
-    static UniqueId createId(SuiteEngineDescriptor engineDescriptor, TestIdentifier testIdentifier) {
-        UniqueId testId = UniqueId.parse(testIdentifier.getUniqueId());
-        return engineDescriptor.testInSuite(testId);
-    }
-
-    @Override
-    public void prune() {
-        // Don't
+    UniqueId testInSuite(UniqueId originalTestId) {
+        UniqueId uniqueId = getUniqueId();
+        for (Segment segment : originalTestId.getSegments()) {
+            uniqueId = uniqueId.append(segment);
+        }
+        return uniqueId;
     }
 
     @Override
     public Type getType() {
-        if (testIdentifier.isContainer() && testIdentifier.isTest()) {
-            return Type.CONTAINER_AND_TEST;
-        } else if (testIdentifier.isContainer()) {
-            return Type.CONTAINER;
-        }
-        return Type.TEST;
+        return Type.CONTAINER;
+    }
+
+    TestPlan getTestPlan() {
+        return testPlan;
+    }
+
+    Launcher getLauncher() {
+        return launcher;
     }
 
 }

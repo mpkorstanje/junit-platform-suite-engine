@@ -14,21 +14,21 @@ import java.util.Map;
 final class EngineExecutionListenerAdaptor implements TestExecutionListener {
 
     private final Map<UniqueId, TestDescriptor> dynamicTests = new HashMap<>();
-    private final SuiteEngineDescriptor suiteEngineDescriptor;
+    private final SuiteTestDescriptor suiteTestDescriptor;
     private final EngineExecutionListener delegate;
 
     public EngineExecutionListenerAdaptor(
-            SuiteEngineDescriptor suiteEngineDescriptor,
+            SuiteTestDescriptor suiteTestDescriptor,
             EngineExecutionListener delegate
     ) {
-        this.suiteEngineDescriptor = suiteEngineDescriptor;
+        this.suiteTestDescriptor = suiteTestDescriptor;
         this.delegate = delegate;
     }
 
     @Override
     public void dynamicTestRegistered(TestIdentifier testIdentifier) {
         UniqueId testId = UniqueId.parse(testIdentifier.getUniqueId());
-        dynamicTests.put(testId, new SuiteTestDescriptor(suiteEngineDescriptor, testIdentifier));
+        dynamicTests.put(testId, new TestIdentifierAdaptor(suiteTestDescriptor, testIdentifier));
     }
 
     @Override
@@ -57,8 +57,8 @@ final class EngineExecutionListenerAdaptor implements TestExecutionListener {
 
     private TestDescriptor findTestDescriptor(TestIdentifier testIdentifier) {
         UniqueId testId = UniqueId.parse(testIdentifier.getUniqueId());
-        UniqueId suiteTestId = suiteEngineDescriptor.testInSuite(testId);
-        return suiteEngineDescriptor.getDescendants().stream()
+        UniqueId suiteTestId = suiteTestDescriptor.testInSuite(testId);
+        return suiteTestDescriptor.getDescendants().stream()
                 .map(TestDescriptor.class::cast)
                 .filter(suiteTestDescriptor -> suiteTestId.equals(suiteTestDescriptor.getUniqueId()))
                 .findFirst()
