@@ -165,4 +165,14 @@ class SuiteEngineTest {
                 .haveExactly(1, event(test(SelectClassesSuite.class.getName()), finishedSuccessfully()));
     }
 
+    @Test
+    void configuration() {
+        EngineTestKit.engine(ENGINE_ID)
+                .selectors(selectClass(ConfigurationSuite.class))
+                .execute()
+                .testEvents()
+                .assertThatEvents()
+                .haveExactly(1, event(test(ConfigurationSuite.class.getName()), finishedSuccessfully()));
+    }
+
 }
