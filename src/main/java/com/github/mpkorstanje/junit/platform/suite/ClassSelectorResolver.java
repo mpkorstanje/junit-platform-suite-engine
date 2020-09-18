@@ -1,12 +1,12 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
 import org.junit.platform.engine.TestDescriptor;
+import org.junit.platform.engine.UniqueId;
 import org.junit.platform.engine.discovery.ClassNameFilter;
 import org.junit.platform.engine.discovery.ClassSelector;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.engine.discovery.PackageNameFilter;
 import org.junit.platform.engine.discovery.PackageSelector;
-import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
 import org.junit.platform.engine.support.discovery.SelectorResolver;
 import org.junit.platform.launcher.EngineFilter;
 import org.junit.platform.launcher.Launcher;
@@ -30,6 +30,7 @@ import org.junit.platform.suite.api.SelectPackages;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
@@ -61,13 +62,24 @@ class ClassSelectorResolver implements SelectorResolver {
                 testPlan,
                 launcher
         );
-        testPlan.getRoots().stream()
-                .map(testIdentifier -> adapTestIdentifier(suiteTestDescriptor, testPlan, testIdentifier))
-                .forEach(engineDescriptor -> {
-                    suiteTestDescriptor.addChild(engineDescriptor);
-                    engineDescriptor.prune();
-                });
+
+        addEnginesToSuite(suiteTestDescriptor, testPlan, testIdentifier -> {
+            UniqueId uniqueId = suiteTestDescriptor.uniqueIdInSuite(testIdentifier);
+            return new JUnitPlatformTestDescriptor(uniqueId, testIdentifier);
+        });
+
         return Optional.of(suiteTestDescriptor);
+    }
+
+
+
+    private void addEnginesToSuite(
+            SuiteTestDescriptor suiteTestDescriptor,
+            TestPlan testPlan,
+            Function<TestIdentifier, TestDescriptor> createTestDescriptor) {
+        testPlan.getRoots().stream()
+                .map(testIdentifier -> adapTestIdentifier(testPlan, testIdentifier, createTestDescriptor))
+                .forEach(suiteTestDescriptor::addChild);
     }
 
     private LauncherDiscoveryRequest createLauncherDiscoveryRequest(Class<?> testClass) {
@@ -115,13 +127,13 @@ class ClassSelectorResolver implements SelectorResolver {
     }
 
     private TestDescriptor adapTestIdentifier(
-            SuiteTestDescriptor suiteTestDescriptor,
             TestPlan testPlan,
-            TestIdentifier testIdentifier
+            TestIdentifier testIdentifier,
+            Function<TestIdentifier, TestDescriptor> mapper
     ) {
-        AbstractTestDescriptor testDescriptor = new TestIdentifierAdaptor(suiteTestDescriptor, testIdentifier);
+        TestDescriptor testDescriptor = mapper.apply(testIdentifier);
         testPlan.getChildren(testIdentifier).stream()
-                .map(childIdentifier -> adapTestIdentifier(suiteTestDescriptor, testPlan, childIdentifier))
+                .map(childIdentifier -> adapTestIdentifier(testPlan, childIdentifier, mapper))
                 .forEach(testDescriptor::addChild);
         return testDescriptor;
     }

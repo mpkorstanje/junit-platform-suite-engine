@@ -1,7 +1,5 @@
-package com.github.mpkorstanje.junit.platform.suites;
+package com.github.mpkorstanje.junit.platform.suite;
 
-import com.github.mpkorstanje.junit.platform.suite.Suite;
-import org.junit.platform.suite.api.ExcludeClassNamePatterns;
 import org.junit.platform.suite.api.IncludeClassNamePatterns;
 import org.junit.platform.suite.api.SelectPackages;
 

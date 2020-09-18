@@ -1,19 +1,12 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
-import com.github.mpkorstanje.junit.platform.suites.ExcludeClassNamePatternsSuite;
-import com.github.mpkorstanje.junit.platform.suites.ExcludeEnginesSuite;
-import com.github.mpkorstanje.junit.platform.suites.ExcludeTagsSuite;
-import com.github.mpkorstanje.junit.platform.suites.IncludeClassNamePatternsSuite;
-import com.github.mpkorstanje.junit.platform.suites.IncludeTagsSuite;
-import com.github.mpkorstanje.junit.platform.suites.IncludeEnginesSuite;
-import com.github.mpkorstanje.junit.platform.suites.IncludePackagesSuite;
-import com.github.mpkorstanje.junit.platform.suites.SelectClassSuite;
-import com.github.mpkorstanje.junit.platform.suites.SelectPackageSuite;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
 import static com.github.mpkorstanje.junit.platform.suite.SuiteEngineDescriptor.ENGINE_ID;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
+import static org.junit.platform.testkit.engine.EventConditions.container;
+import static org.junit.platform.testkit.engine.EventConditions.displayName;
 import static org.junit.platform.testkit.engine.EventConditions.event;
 import static org.junit.platform.testkit.engine.EventConditions.finishedSuccessfully;
 import static org.junit.platform.testkit.engine.EventConditions.test;
@@ -21,17 +14,17 @@ import static org.junit.platform.testkit.engine.EventConditions.test;
 class SuiteEngineTest {
 
     @Test
-    void classSelector() {
+    void selectClasses() {
         EngineTestKit.engine(ENGINE_ID)
-                .selectors(selectClass(SelectClassSuite.class))
+                .selectors(selectClass(SelectClassesSuite.class))
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(SelectClassSuite.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(SelectClassesSuite.class.getName()), finishedSuccessfully()));
     }
 
     @Test
-    void packageSelector() {
+    void selectPackage() {
         EngineTestKit.engine(ENGINE_ID)
                 .selectors(selectClass(SelectPackageSuite.class))
                 .execute()
@@ -91,13 +84,23 @@ class SuiteEngineTest {
     }
 
     @Test
-    void includedEngines() {
+    void includeJupiterEngines() {
         EngineTestKit.engine(ENGINE_ID)
-                .selectors(selectClass(IncludeEnginesSuite.class))
+                .selectors(selectClass(IncludeJupiterEnginesSuite.class))
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(IncludeEnginesSuite.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(IncludeJupiterEnginesSuite.class.getName()), finishedSuccessfully()));
+    }
+
+    @Test
+    void includeSuiteEngine() {
+        EngineTestKit.engine(ENGINE_ID)
+                .selectors(selectClass(IncludeSuiteEngineSuite.class))
+                .execute()
+                .testEvents()
+                .assertThatEvents()
+                .isEmpty();
     }
 
     @Test
@@ -118,6 +121,16 @@ class SuiteEngineTest {
                 .testEvents()
                 .assertThatEvents()
                 .haveExactly(1, event(test(IncludePackagesSuite.class.getName()), finishedSuccessfully()));
+    }
+
+    @Test
+    void suiteDisplayName() {
+        EngineTestKit.engine(ENGINE_ID)
+                .selectors(selectClass(SuiteDisplayNameSuite.class))
+                .execute()
+                .allEvents()
+                .assertThatEvents()
+                .haveExactly(1, event(container(displayName("Suite Display Name")), finishedSuccessfully()));
     }
 
 }

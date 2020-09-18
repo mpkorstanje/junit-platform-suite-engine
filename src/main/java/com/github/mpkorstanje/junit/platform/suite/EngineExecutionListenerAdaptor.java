@@ -13,7 +13,7 @@ import java.util.Map;
 
 final class EngineExecutionListenerAdaptor implements TestExecutionListener {
 
-    private final Map<UniqueId, TestDescriptor> dynamicTests = new HashMap<>();
+    private final Map<String, TestDescriptor> dynamicTests = new HashMap<>();
     private final SuiteTestDescriptor suiteTestDescriptor;
     private final EngineExecutionListener delegate;
 
@@ -27,8 +27,8 @@ final class EngineExecutionListenerAdaptor implements TestExecutionListener {
 
     @Override
     public void dynamicTestRegistered(TestIdentifier testIdentifier) {
-        UniqueId testId = UniqueId.parse(testIdentifier.getUniqueId());
-        dynamicTests.put(testId, new TestIdentifierAdaptor(suiteTestDescriptor, testIdentifier));
+        UniqueId uniqueId = suiteTestDescriptor.uniqueIdInSuite(testIdentifier);
+        dynamicTests.put(testIdentifier.getUniqueId(), new JUnitPlatformTestDescriptor(uniqueId, testIdentifier));
     }
 
     @Override
@@ -56,13 +56,12 @@ final class EngineExecutionListenerAdaptor implements TestExecutionListener {
     }
 
     private TestDescriptor findTestDescriptor(TestIdentifier testIdentifier) {
-        UniqueId testId = UniqueId.parse(testIdentifier.getUniqueId());
-        UniqueId suiteTestId = suiteTestDescriptor.testInSuite(testId);
+        UniqueId suiteTestId = suiteTestDescriptor.uniqueIdInSuite(testIdentifier);
         return suiteTestDescriptor.getDescendants().stream()
                 .map(TestDescriptor.class::cast)
                 .filter(suiteTestDescriptor -> suiteTestId.equals(suiteTestDescriptor.getUniqueId()))
                 .findFirst()
-                .orElseGet(() -> dynamicTests.get(testId));
+                .orElseGet(() -> dynamicTests.get(testIdentifier.getUniqueId()));
     }
 
 }

@@ -4,21 +4,16 @@ import org.junit.platform.engine.UniqueId;
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
 import org.junit.platform.launcher.TestIdentifier;
 
-final class TestIdentifierAdaptor extends AbstractTestDescriptor {
+final class JUnitPlatformTestDescriptor extends AbstractTestDescriptor {
     private final TestIdentifier testIdentifier;
 
-    public TestIdentifierAdaptor(SuiteTestDescriptor suiteTestDescriptor, TestIdentifier testIdentifier) {
+    public JUnitPlatformTestDescriptor(UniqueId uniqueId, TestIdentifier testIdentifier) {
         super(
-                createId(suiteTestDescriptor, testIdentifier),
+                uniqueId,
                 testIdentifier.getDisplayName(),
                 testIdentifier.getSource().orElse(null)
         );
         this.testIdentifier = testIdentifier;
-    }
-
-    static UniqueId createId(SuiteTestDescriptor suiteTestDescriptor, TestIdentifier testIdentifier) {
-        UniqueId testId = UniqueId.parse(testIdentifier.getUniqueId());
-        return suiteTestDescriptor.testInSuite(testId);
     }
 
     @Override

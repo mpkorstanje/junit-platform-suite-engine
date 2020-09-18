@@ -1,6 +1,5 @@
-package com.github.mpkorstanje.junit.platform.suites;
+package com.github.mpkorstanje.junit.platform.suite;
 
-import com.github.mpkorstanje.junit.platform.suite.Suite;
 import com.github.mpkorstanje.junit.platform.testcases.JupiterTestCase;
 import org.junit.platform.suite.api.IncludePackages;
 import org.junit.platform.suite.api.SelectClasses;
