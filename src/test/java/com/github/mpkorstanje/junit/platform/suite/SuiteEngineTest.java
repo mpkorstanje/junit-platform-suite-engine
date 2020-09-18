@@ -1,6 +1,8 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.ClassFilter;
+import org.junit.platform.engine.discovery.ClassNameFilter;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
 import static com.github.mpkorstanje.junit.platform.suite.SuiteEngineDescriptor.ENGINE_ID;
@@ -151,6 +153,17 @@ class SuiteEngineTest {
                 .testEvents()
                 .assertThatEvents()
                 .isEmpty();
+    }
+
+    @Test
+    void filterClasses() {
+        EngineTestKit.engine(ENGINE_ID)
+                .selectors(selectClass(SelectClassesSuite.class), selectClass(SelectPackageSuite.class))
+                .filters(ClassNameFilter.excludeClassNamePatterns(SelectPackageSuite.class.getName()))
+                .execute()
+                .testEvents()
+                .assertThatEvents()
+                .haveExactly(1, event(test(SelectClassesSuite.class.getName()), finishedSuccessfully()));
     }
 
 }
