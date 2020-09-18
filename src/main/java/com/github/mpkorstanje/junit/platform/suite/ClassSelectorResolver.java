@@ -14,6 +14,7 @@ import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TagFilter;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
+import org.junit.platform.launcher.core.LauncherConfig;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.suite.api.ExcludeClassNamePatterns;
@@ -71,7 +72,11 @@ class ClassSelectorResolver implements SelectorResolver {
     private Optional<SuiteTestDescriptor> newSuiteDescriptor(Class<?> testClass, TestDescriptor parent) {
         LauncherDiscoveryRequest launcherDiscoveryRequest = createLauncherDiscoveryRequest(testClass);
 
-        Launcher launcher = LauncherFactory.create();
+        LauncherConfig launcherConfig = LauncherConfig.builder()
+                // TODO: Support launcher config annotations
+                .build();
+
+        Launcher launcher = LauncherFactory.create(launcherConfig);
         TestPlan testPlan = launcher.discover(launcherDiscoveryRequest);
 
         SuiteTestDescriptor suiteTestDescriptor = new SuiteTestDescriptor(
