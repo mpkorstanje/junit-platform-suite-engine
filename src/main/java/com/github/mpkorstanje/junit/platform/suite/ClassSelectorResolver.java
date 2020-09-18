@@ -108,6 +108,17 @@ class ClassSelectorResolver implements SelectorResolver {
         findAnnotation(testClass, SelectPackages.class).map(SelectPackages::value)
                 .ifPresent(packages -> request.selectors(selectPackages(packages)));
 
+        // TODO: Support file position
+        findAnnotation(testClass, SelectClasspathResource.class).map(SelectClasspathResource::value)
+                .ifPresent(resource -> request.selectors(DiscoverySelectors.selectClasspathResource(resource)));
+        findAnnotation(testClass, SelectFile.class).map(SelectFile::value)
+                .ifPresent(file -> request.selectors(DiscoverySelectors.selectFile(file)));
+
+        findAnnotation(testClass, SelectDirectories.class).map(SelectDirectories::value)
+                .ifPresent(directory -> request.selectors(DiscoverySelectors.selectDirectory(directory)));
+
+        // TODO: Support more selectors
+
         findAnnotation(testClass, ExcludeTags.class).map(ExcludeTags::value)
                 .ifPresent(tagExpressions -> request.filters(TagFilter.excludeTags(tagExpressions)));
         findAnnotation(testClass, IncludeTags.class).map(IncludeTags::value)
