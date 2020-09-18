@@ -133,4 +133,14 @@ class SuiteEngineTest {
                 .haveExactly(1, event(container(displayName("Suite Display Name")), finishedSuccessfully()));
     }
 
+    @Test
+    void selectAbstract() {
+        EngineTestKit.engine(ENGINE_ID)
+                .selectors(selectClass(SelectAbstractSuite.class))
+                .execute()
+                .testEvents()
+                .assertThatEvents()
+                .isEmpty();
+    }
+
 }

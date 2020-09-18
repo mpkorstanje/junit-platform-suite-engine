@@ -31,16 +31,34 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 import static org.junit.platform.commons.support.AnnotationSupport.findRepeatableAnnotations;
+import static org.junit.platform.engine.support.discovery.SelectorResolver.Resolution.unresolved;
 
 class ClassSelectorResolver implements SelectorResolver {
+
+    private static final IsSuiteClass isSuiteClass = new IsSuiteClass();
+
+    private final Predicate<String> classNameFilter;
+
+    ClassSelectorResolver(Predicate<String> classNameFilter) {
+        this.classNameFilter = classNameFilter;
+    }
+
     @Override
     public Resolution resolve(ClassSelector selector, Context context) {
         Class<?> testClass = selector.getJavaClass();
-        return toResolution(context.addToParent(parent -> newSuiteDescriptor(testClass, parent)));
+        if (isSuiteClass.test(testClass)) {
+            // Nested tests are never filtered out
+            if (classNameFilter.test(testClass.getName())) {
+                return toResolution(context.addToParent(parent -> newSuiteDescriptor(testClass, parent)));
+            }
+        }
+        // TODO: Support nest test classes
+        return unresolved();
     }
 
     private Resolution toResolution(Optional<SuiteTestDescriptor> suite) {
@@ -70,8 +88,6 @@ class ClassSelectorResolver implements SelectorResolver {
 
         return Optional.of(suiteTestDescriptor);
     }
-
-
 
     private void addEnginesToSuite(
             SuiteTestDescriptor suiteTestDescriptor,

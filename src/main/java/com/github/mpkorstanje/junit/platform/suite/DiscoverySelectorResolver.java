@@ -7,8 +7,8 @@ import org.junit.platform.engine.support.discovery.EngineDiscoveryRequestResolve
 class DiscoverySelectorResolver {
 
     private static final EngineDiscoveryRequestResolver<SuiteEngineDescriptor> resolver = EngineDiscoveryRequestResolver.<SuiteEngineDescriptor>builder()
-            .addClassContainerSelectorResolver(aClass -> aClass.getAnnotation(Suite.class) != null) // TODO: Refine.
-            .addSelectorResolver(context -> new ClassSelectorResolver())
+            .addClassContainerSelectorResolver(new IsSuiteClass())
+            .addSelectorResolver(context -> new ClassSelectorResolver(context.getClassNameFilter()))
             .addTestDescriptorVisitor(context -> TestDescriptor::prune)
             // TODO: Add package, module, ect
             .build();
