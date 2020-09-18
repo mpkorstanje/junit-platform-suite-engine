@@ -23,12 +23,7 @@ final class JUnitPlatformTestDescriptor extends AbstractTestDescriptor {
 
     @Override
     public Type getType() {
-        if (testIdentifier.isContainer() && testIdentifier.isTest()) {
-            return Type.CONTAINER_AND_TEST;
-        } else if (testIdentifier.isContainer()) {
-            return Type.CONTAINER;
-        }
-        return Type.TEST;
+        return testIdentifier.getType();
     }
 
 }

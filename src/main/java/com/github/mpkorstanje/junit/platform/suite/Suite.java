@@ -22,6 +22,7 @@ import org.junit.platform.suite.api.IncludePackages;
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SuiteDisplayName;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -45,6 +46,8 @@ import static org.apiguardian.api.API.Status.EXPERIMENTAL;
  * @see ExcludeTags
  * @see IncludeEngines
  * @see ExcludeEngines
+ * @see SuiteDisplayName
+ * @see Configuration
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

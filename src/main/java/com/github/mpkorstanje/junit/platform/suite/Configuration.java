@@ -11,6 +11,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * {@code @Configuration} passes a configuration value to the suite.
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited
@@ -18,7 +21,8 @@ import java.lang.annotation.Target;
 @API(status = Status.EXPERIMENTAL)
 @Repeatable(Configurations.class)
 public @interface Configuration {
-	String key();
+    String key();
 
-	String value() default "";
+    String value() default "";
+
 }
