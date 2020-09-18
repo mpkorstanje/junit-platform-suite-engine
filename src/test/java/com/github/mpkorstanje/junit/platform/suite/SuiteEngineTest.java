@@ -143,4 +143,14 @@ class SuiteEngineTest {
                 .isEmpty();
     }
 
+    @Test
+    void nestedSelectClasses() {
+        EngineTestKit.engine(ENGINE_ID)
+                .selectors(selectClass(NestedSelectClassesSuite.class))
+                .execute()
+                .testEvents()
+                .assertThatEvents()
+                .isEmpty();
+    }
+
 }

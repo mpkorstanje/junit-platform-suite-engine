@@ -5,6 +5,6 @@ import org.junit.platform.suite.api.SelectClasses;
 
 @Suite
 @SelectClasses(JupiterTestCase.class)
-public class SelectClassesSuite {
+class SelectClassesSuite {
 
 }

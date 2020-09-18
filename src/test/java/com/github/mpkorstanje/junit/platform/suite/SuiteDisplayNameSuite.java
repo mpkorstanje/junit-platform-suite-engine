@@ -7,6 +7,6 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @Suite
 @SelectClasses(JupiterTestCase.class)
 @SuiteDisplayName("Suite Display Name")
-public class SuiteDisplayNameSuite {
+class SuiteDisplayNameSuite {
 
 }

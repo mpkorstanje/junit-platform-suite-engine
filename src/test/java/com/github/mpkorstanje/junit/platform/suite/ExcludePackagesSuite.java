@@ -7,6 +7,6 @@ import org.junit.platform.suite.api.SelectClasses;
 @Suite
 @ExcludePackages("com.github.mpkorstanje.junit.platform")
 @SelectClasses(JupiterTestCase.class)
-public class ExcludePackagesSuite {
+class ExcludePackagesSuite {
 
 }

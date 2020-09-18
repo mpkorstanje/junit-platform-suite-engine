@@ -8,6 +8,6 @@ import org.junit.platform.suite.api.SelectClasses;
 @Suite
 @ExcludeTags("test-tag")
 @SelectClasses({ JupiterTestCase.class, TaggedTestCase.class})
-public class ExcludeTagsSuite {
+class ExcludeTagsSuite {
 
 }

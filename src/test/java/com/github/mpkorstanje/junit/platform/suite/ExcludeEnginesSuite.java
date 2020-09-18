@@ -8,6 +8,6 @@ import org.junit.platform.suite.api.SelectClasses;
 @Suite
 @ExcludeEngines(JupiterEngineDescriptor.ENGINE_ID)
 @SelectClasses(JupiterTestCase.class)
-public class ExcludeEnginesSuite {
+class ExcludeEnginesSuite {
 
 }

@@ -6,6 +6,6 @@ import org.junit.platform.suite.api.SelectPackages;
 @Suite
 @IncludeEngines(SuiteEngineDescriptor.ENGINE_ID)
 @SelectPackages("com.github.mpkorstanje.junit.platform.suite")
-public class IncludeSuiteEngineSuite {
+class IncludeSuiteEngineSuite {
 
 }

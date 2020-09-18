@@ -7,6 +7,6 @@ import org.junit.platform.suite.api.SelectClasses;
 @Suite
 @IncludePackages("com.github.mpkorstanje.junit.platform")
 @SelectClasses(JupiterTestCase.class)
-public class IncludePackagesSuite {
+class IncludePackagesSuite {
 
 }

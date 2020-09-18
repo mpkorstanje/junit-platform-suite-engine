@@ -4,6 +4,6 @@ import org.junit.platform.suite.api.SelectPackages;
 
 @Suite
 @SelectPackages("com.github.mpkorstanje.junit.platform.testcases")
-public class SelectPackageSuite {
+class SelectPackageSuite {
 
 }

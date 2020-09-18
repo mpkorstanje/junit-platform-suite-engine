@@ -6,6 +6,6 @@ import org.junit.platform.suite.api.SelectPackages;
 @Suite
 @IncludeClassNamePatterns(".*Jupiter.*")
 @SelectPackages("com.github.mpkorstanje.junit.platform.testcases")
-public class IncludeClassNamePatternsSuite {
+class IncludeClassNamePatternsSuite {
 
 }
