@@ -1,7 +1,6 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.ClassFilter;
 import org.junit.platform.engine.discovery.ClassNameFilter;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
