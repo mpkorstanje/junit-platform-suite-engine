@@ -5,6 +5,8 @@ The `junit-platform-suite-engine` is a test engine that uses the JUnit Platform
 Launcher to run suites of tests. This can be useful. For example when running
 Cucumber.
 
+See https://github.com/mpkorstanje/junit-platform-suite-demo for a demo.
+
 Where previously you would have to create and run the launcher manually:
 
 ```java
