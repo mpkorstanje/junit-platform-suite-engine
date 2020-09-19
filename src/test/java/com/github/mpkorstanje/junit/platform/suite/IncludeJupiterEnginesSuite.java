@@ -1,13 +1,13 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
-import com.github.mpkorstanje.junit.platform.testcases.SimpleTestCase;
+import com.github.mpkorstanje.junit.platform.testcases.Simple;
 import org.junit.jupiter.engine.descriptor.JupiterEngineDescriptor;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasses;
 
 @Suite
 @IncludeEngines(JupiterEngineDescriptor.ENGINE_ID)
-@SelectClasses(SimpleTestCase.class)
+@SelectClasses(Simple.class)
 class IncludeJupiterEnginesSuite {
 
 }

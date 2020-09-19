@@ -1,9 +1,9 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
-import com.github.mpkorstanje.junit.platform.testcases.ConditionalTestCase;
-import com.github.mpkorstanje.junit.platform.testcases.DynamicTestCase;
-import com.github.mpkorstanje.junit.platform.testcases.SimpleTestCase;
-import com.github.mpkorstanje.junit.platform.testcases.TaggedTestCase;
+import com.github.mpkorstanje.junit.platform.testcases.Conditional;
+import com.github.mpkorstanje.junit.platform.testcases.Dynamic;
+import com.github.mpkorstanje.junit.platform.testcases.Simple;
+import com.github.mpkorstanje.junit.platform.testcases.Tagged;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.engine.discovery.ClassNameFilter;
 import org.junit.platform.testkit.engine.EngineTestKit;
@@ -25,7 +25,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(SimpleTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Simple.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -35,7 +35,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveAtLeastOne(event(test(SimpleTestCase.class.getName()), finishedSuccessfully()));
+                .haveAtLeastOne(event(test(Simple.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -45,7 +45,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(SimpleTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Simple.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -55,7 +55,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(TaggedTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Tagged.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -65,7 +65,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(TaggedTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Tagged.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -75,7 +75,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(SimpleTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Simple.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -95,7 +95,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(SimpleTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Simple.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -125,7 +125,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveAtLeastOne(event(test(SimpleTestCase.class.getName()), finishedSuccessfully()));
+                .haveAtLeastOne(event(test(Simple.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -166,7 +166,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(SimpleTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Simple.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -176,7 +176,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(1, event(test(ConditionalTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(1, event(test(Conditional.class.getName()), finishedSuccessfully()));
     }
 
     @Test
@@ -186,7 +186,7 @@ class SuiteEngineTest {
                 .execute()
                 .testEvents()
                 .assertThatEvents()
-                .haveExactly(2, event(test(DynamicTestCase.class.getName()), finishedSuccessfully()));
+                .haveExactly(2, event(test(Dynamic.class.getName()), finishedSuccessfully()));
     }
 
 }

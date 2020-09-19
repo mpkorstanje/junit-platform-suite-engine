@@ -8,7 +8,7 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DynamicTestCase {
+public class Dynamic {
 
     @TestFactory
     Collection<DynamicTest> dynamicTestsWithCollection() {

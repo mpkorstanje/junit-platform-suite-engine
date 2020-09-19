@@ -1,10 +1,10 @@
 package com.github.mpkorstanje.junit.platform.suite;
 
-import com.github.mpkorstanje.junit.platform.testcases.SimpleTestCase;
+import com.github.mpkorstanje.junit.platform.testcases.Simple;
 import org.junit.platform.suite.api.SelectClasses;
 
 @Suite
-@SelectClasses(SimpleTestCase.class)
+@SelectClasses(Simple.class)
 class SelectClassesSuite {
 
 }

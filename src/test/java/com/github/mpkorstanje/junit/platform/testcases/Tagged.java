@@ -1,8 +1,10 @@
 package com.github.mpkorstanje.junit.platform.testcases;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class SimpleTestCase {
+@Tag("test-tag")
+public class Tagged {
 
     @Test
     void test(){
