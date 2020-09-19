@@ -28,7 +28,9 @@ final class EngineExecutionListenerAdaptor implements TestExecutionListener {
     @Override
     public void dynamicTestRegistered(TestIdentifier testIdentifier) {
         UniqueId uniqueId = suiteTestDescriptor.uniqueIdInSuite(testIdentifier);
-        dynamicTests.put(testIdentifier.getUniqueId(), new JUnitPlatformTestDescriptor(uniqueId, testIdentifier));
+        JUnitPlatformTestDescriptor mappedTest = new JUnitPlatformTestDescriptor(uniqueId, testIdentifier);
+        dynamicTests.put(testIdentifier.getUniqueId(), mappedTest);
+        delegate.dynamicTestRegistered(mappedTest);
     }
 
     @Override
